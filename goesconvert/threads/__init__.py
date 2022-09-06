@@ -12,13 +12,11 @@ class WaltThreadList:
     _instance = None
 
     threads_list = []
-    lock = None
+    lock = threading.Lock()
 
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-            cls.lock = threading.Lock()
-            cls.threads_list = []
         return cls._instance
 
     def add(self, thread_obj):

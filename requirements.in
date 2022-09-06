@@ -1,10 +1,13 @@
 click
 click-completion
+oslo-config
+oslo-context
 pbr
 pyyaml
 pytz
+rich
 six
 update_checker
-rich
+watchdog
 wrapt
 
