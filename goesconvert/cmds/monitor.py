@@ -141,6 +141,7 @@ class FileHandler(object):
         self.dirname = os.path.dirname(self.source)
         base_path = self.dirname.replace(self.satellite_dir, "")
         components = base_path.split('/')
+        LOG.debug(f"Components {components}")
         self.model = components[1]
         self.chan = components[3]
 
