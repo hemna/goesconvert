@@ -11,7 +11,6 @@ from goesconvert import cli_helper, utils
 
 
 CONF = cfg.CONF
-CONF([], project='goesconvert', version=goesconvert.__version__)
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
 

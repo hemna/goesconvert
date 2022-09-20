@@ -5,6 +5,7 @@ import click
 from oslo_config import cfg
 from rich.console import Console
 
+import goesconvert
 from goesconvert.logging import log
 from goesconvert.utils import trace
 
@@ -31,6 +32,11 @@ common_options = [
         default=False,
         help="Don't log to stdout",
     ),
+    click.option(
+        "--config-file",
+        default=None,
+        help="Config file for goesconvert"
+    )
 ]
 
 
@@ -46,6 +52,13 @@ def process_standard_options(f: F) -> F:
     def new_func(*args, **kwargs):
         ctx = args[0]
         ctx.ensure_object(dict)
+        if kwargs['config_file']:
+            default_config_files = [kwargs['config_file']]
+        else:
+            default_config_files = None
+        CONF([], project='goesconvert', version=goesconvert.__version__,
+             default_config_files=default_config_files)
+
         ctx.obj["loglevel"] = kwargs["loglevel"]
         ctx.obj["quiet"] = kwargs["quiet"]
         log.setup_logging(
@@ -58,7 +71,7 @@ def process_standard_options(f: F) -> F:
         ctx.obj['console'] = Console()
 
         del kwargs["loglevel"]
-        # del kwargs["config_file"]
+        del kwargs["config_file"]
         del kwargs["quiet"]
         return f(*args, **kwargs)
 
